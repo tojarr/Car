@@ -8,27 +8,32 @@ namespace Car
 {
     partial class BaseCar
     {
-        protected int _Year;
+        public DateTime Year;
         protected string _Model;
         protected string _Color;
         protected int _Mileage;
         protected double _Price;
-        protected double _Discount;
+        protected readonly double _Discount;
         static int _CarCount = 0;
+        const string _ConstColor = "Red";
 
 
+        public BaseCar(int year, string model, double price, double discount, int mileage)
+            : this(year, model, price, discount, mileage, _ConstColor)
+        {
 
+        }
 
-        public BaseCar(int year, string model, string color, double price, double discount, int mileage)
+        public BaseCar(int year, string model, double price, double discount, int mileage, string color)
         {
             if (year > 1900 & year < 2020)
             {
-                _Year = year;
+                Year = new DateTime(year, 01, 01);
             }
             else
             {
                 Console.WriteLine("Invalid Year");
-                _Year = 2000;
+                Year = new DateTime(2000, 01, 01);
             }
 
             _Model = model;
@@ -50,7 +55,7 @@ namespace Car
             return _Mileage;
         }
 
-        public double GetDiscount()
+        public virtual double GetDiscount()
         {
             return _Price * _Discount;
         }
@@ -59,9 +64,9 @@ namespace Car
         {
             card = card.ToLower();
             if (card == "premium")
-                return _Price * (_Discount - 0.1);
+                return GetDiscount() - 0.1;
             else if (card == "gold")
-                return _Price * (_Discount - 0.2);
+                return GetDiscount() - 0.2;
             else
                 return GetDiscount();
         }

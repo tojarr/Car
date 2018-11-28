@@ -14,12 +14,19 @@ namespace Car
                 return false;
 
             BaseCar car = (BaseCar)obj;
-            return (car._Model == this._Model && car._Year == this._Year);
+            return (car._Model == this._Model && car.Year == this.Year);
         }
 
         public override int GetHashCode()
         {
-            return this._Model.GetHashCode() ^ this._Year.GetHashCode();
+            return this._Model.GetHashCode() ^ this.Year.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if(String.IsNullOrEmpty(_Model))
+            return base.ToString();
+            return _Model;
         }
 
 
